@@ -30,5 +30,11 @@ public class LinkService {
                 .orElseThrow(() -> new RuntimeException("Link not found with id: " + id));
     }
 
-
+    public Link getOriginalUrl(String shortLink) {
+        try {
+            return linkRepository.findByShortLink(shortLink);
+        } catch (Exception e) {
+            throw new RuntimeException("Link doesn't exist. " + e);
+        }
+    }
 }
