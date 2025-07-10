@@ -6,5 +6,6 @@ public record LinkDTO(
     Long id,
     String shortLink,
     String originalLink,
-    LocalDateTime createdAt
+    LocalDateTime createdAt,
+    String qrCodeLink
 ) {}

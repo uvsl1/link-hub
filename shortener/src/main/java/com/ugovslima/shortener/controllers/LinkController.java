@@ -9,6 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
 @RestController
@@ -23,16 +25,21 @@ public class LinkController {
         String originalLink = request.get("originalLink");
         String newLink = linkService.generateShortLink(originalLink);
         String fullShortLink = "http://localhost:8080/api/links/" + newLink;
+
+        String qrCodeLink = "http://localhost:8080/api/qrcode/generate?url=" + fullShortLink;
+
         Link link = new Link();
         link.setShortLink(newLink);
         link.setOriginalLink(originalLink);
         link.setCreatedAt(java.time.LocalDateTime.now());
         Link savedLink = linkService.saveLink(link);
+
         LinkDTO linkDTO = new LinkDTO(
                 savedLink.getId(),
                 fullShortLink,
                 savedLink.getOriginalLink(),
-                savedLink.getCreatedAt()
+                savedLink.getCreatedAt(),
+                qrCodeLink
         );
         return ResponseEntity.ok(linkDTO);
     }

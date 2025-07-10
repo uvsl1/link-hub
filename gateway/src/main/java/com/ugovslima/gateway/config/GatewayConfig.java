@@ -15,7 +15,7 @@ public class GatewayConfig {
                         .path("/api/links/**")
                         .uri("http://localhost:8081"))
                 .route("qrcode-service", r -> r
-                        .path("/api/qrcode**")
+                        .path("/api/qrcode/**")
                         .uri("http://localhost:8082"))
                 .build();
     }
