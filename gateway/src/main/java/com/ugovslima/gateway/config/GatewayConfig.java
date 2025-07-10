@@ -14,6 +14,9 @@ public class GatewayConfig {
                 .route("shortener-service", r -> r
                         .path("/api/links/**")
                         .uri("http://localhost:8081"))
+                .route("qrcode-service", r -> r
+                        .path("/api/qrcode**")
+                        .uri("http://localhost:8082"))
                 .build();
     }
 }

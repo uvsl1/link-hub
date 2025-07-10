@@ -22,7 +22,7 @@ public class LinkController {
     public ResponseEntity<LinkDTO> shortenLink(@RequestBody Map<String, String> request) {
         String originalLink = request.get("originalLink");
         String newLink = linkService.generateShortLink(originalLink);
-        String fullShortLink = "http://localhost:8081/api/links/" + newLink;
+        String fullShortLink = "http://localhost:8080/api/links/" + newLink;
         Link link = new Link();
         link.setShortLink(newLink);
         link.setOriginalLink(originalLink);
