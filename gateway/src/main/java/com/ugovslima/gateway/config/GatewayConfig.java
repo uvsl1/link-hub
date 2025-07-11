@@ -13,10 +13,10 @@ public class GatewayConfig {
         return builder.routes()
                 .route("shortener-service", r -> r
                         .path("/api/links/**")
-                        .uri("http://localhost:8081"))
+                        .uri("lb://shortener-service"))
                 .route("qrcode-service", r -> r
                         .path("/api/qrcode/**")
-                        .uri("http://localhost:8082"))
+                        .uri("lb://qrcode-service"))
                 .build();
     }
 }
