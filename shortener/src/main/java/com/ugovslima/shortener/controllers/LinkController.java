@@ -26,12 +26,15 @@ public class LinkController {
         String newLink = linkService.generateShortLink(originalLink);
         String fullShortLink = "http://localhost:8080/api/links/" + newLink;
 
-        String qrCodeLink = "http://localhost:8080/api/qrcode/generate?url=" + fullShortLink;
+        String qrCodeFullLink = "http://localhost:8080/api/qrcode/generate?url=" + fullShortLink;
 
         Link link = new Link();
         link.setShortLink(newLink);
         link.setOriginalLink(originalLink);
         link.setCreatedAt(java.time.LocalDateTime.now());
+
+        link.setQrCodeLink(newLink);
+
         Link savedLink = linkService.saveLink(link);
 
         LinkDTO linkDTO = new LinkDTO(
@@ -39,7 +42,7 @@ public class LinkController {
                 fullShortLink,
                 savedLink.getOriginalLink(),
                 savedLink.getCreatedAt(),
-                qrCodeLink
+                qrCodeFullLink
         );
         return ResponseEntity.ok(linkDTO);
     }

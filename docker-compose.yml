@@ -26,8 +26,12 @@ services:
       - "8081:8081"
     depends_on:
       - eureka-server
+      - db
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/shortener_db
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=123456
 
   qrcode-service:
     build: ./qrcode
@@ -38,3 +42,13 @@ services:
       - eureka-server
     environment:
       - EUREKA_CLIENT_SERVICEURL_DEFAULTZONE=http://eureka-server:8761/eureka
+
+  db:
+    image: postgres:16
+    container_name: postgres-shortener
+    environment:
+      POSTGRES_DB: shortener_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+    ports:
+      - "5432:5432"

@@ -27,4 +27,6 @@ public class Link {
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    private String qrCodeLink;
+
 }
