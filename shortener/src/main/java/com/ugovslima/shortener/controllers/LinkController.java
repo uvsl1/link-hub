@@ -23,10 +23,25 @@ public class LinkController {
     @PostMapping("/shorten")
     public ResponseEntity<LinkDTO> shortenLink(@RequestBody Map<String, String> request) {
         String originalLink = request.get("originalLink");
+
+        Link existingLink = linkService.findByOriginalLink(originalLink);
+        if (existingLink != null) {
+            String existingFullShortLink = "http://localhost:8080/api/links/" + existingLink.getShortLink();
+            String existingQrCodeFullLink = "http://localhost:8080/api/qrcode/generate?url=" + existingFullShortLink;
+
+            LinkDTO existingDTO = new LinkDTO(
+                    existingLink.getId(),
+                    existingFullShortLink,
+                    existingLink.getOriginalLink(),
+                    existingLink.getCreatedAt(),
+                    existingQrCodeFullLink
+            );
+            return ResponseEntity.status(409).body(existingDTO);
+        }
+
         String newLink = linkService.generateShortLink(originalLink);
         String fullShortLink = "http://localhost:8080/api/links/" + newLink;
-
-        String qrCodeFullLink = "http://localhost:8080/api/qrcode/generate?url=" + fullShortLink;
+        String fullQrCodeLink = "http://localhost:8080/api/qrcode/generate?url=" + fullShortLink;
 
         Link link = new Link();
         link.setShortLink(newLink);
@@ -42,7 +57,7 @@ public class LinkController {
                 fullShortLink,
                 savedLink.getOriginalLink(),
                 savedLink.getCreatedAt(),
-                qrCodeFullLink
+                fullQrCodeLink
         );
         return ResponseEntity.ok(linkDTO);
     }

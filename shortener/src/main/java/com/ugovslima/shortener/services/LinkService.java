@@ -37,4 +37,8 @@ public class LinkService {
             throw new RuntimeException("Link doesn't exist. " + e);
         }
     }
+
+    public Link findByOriginalLink(String originalLink) {
+        return linkRepository.findByOriginalLink(originalLink).orElse(null);
+    }
 }
