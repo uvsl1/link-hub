@@ -29,4 +29,6 @@ public class Link {
 
     private String qrCodeLink;
 
+    private int clicksCount = 0;
+
 }

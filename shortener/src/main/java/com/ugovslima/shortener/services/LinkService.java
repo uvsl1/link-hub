@@ -41,4 +41,9 @@ public class LinkService {
     public Link findByOriginalLink(String originalLink) {
         return linkRepository.findByOriginalLink(originalLink).orElse(null);
     }
+
+    public void clicksCount(Link link) {
+        link.setClicksCount(link.getClicksCount() + 1);
+        linkRepository.save(link);
+    }
 }

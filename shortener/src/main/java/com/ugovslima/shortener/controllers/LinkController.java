@@ -71,6 +71,7 @@ public class LinkController {
             return;
         }
         response.sendRedirect(link.getOriginalLink());
+        linkService.clicksCount(link);
 
     }
 }

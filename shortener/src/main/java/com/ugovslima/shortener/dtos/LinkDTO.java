@@ -7,5 +7,10 @@ public record LinkDTO(
     String shortLink,
     String originalLink,
     LocalDateTime createdAt,
-    String qrCodeLink
-) {}
+    String qrCodeLink,
+    int clicksCount
+) {
+    public LinkDTO(Long id, String shortLink, String originalLink, LocalDateTime createdAt, String qrCodeLink) {
+        this(id, shortLink, originalLink, createdAt, qrCodeLink, 0);
+    }
+}
