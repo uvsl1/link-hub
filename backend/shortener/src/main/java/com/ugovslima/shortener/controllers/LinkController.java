@@ -72,6 +72,19 @@ public class LinkController {
         }
         response.sendRedirect(link.getOriginalLink());
         linkService.clicksCount(link);
+    }
 
+    @GetMapping("/clicks")
+    public ResponseEntity<Integer> getClicksCount(@RequestParam String url) {
+        int lastSlash = url.lastIndexOf('/');
+        if (lastSlash == -1 || lastSlash == url.length() - 1) {
+            return ResponseEntity.badRequest().build();
+        }
+        String shortLink = url.substring(lastSlash + 1);
+        Link link = linkService.getOriginalUrl(shortLink);
+        if (link == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(link.getClicksCount());
     }
 }
