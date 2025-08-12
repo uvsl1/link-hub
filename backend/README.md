@@ -24,6 +24,7 @@ O sistema permite encurtar URLs, armazená-las em banco de dados e gerar QR Code
 |--------|-----------------------|--------------------------------|------------------------------------------|
 | **POST** | `/api/links/shorten`   | Encurta uma URL                 | `{ "originalLink": "https://site.com" }` |
 | **GET**  | `/api/links/{shortLink}` | Redireciona para a URL original | -                                        |
+| **GET**  | `/api/links/clicks`      | Retorna a contagem de cliques de um link encurtado (via parâmetro `fullLink`) | - (usar query param: `fullLink`) |
 
 **Exemplo de resposta (POST /shorten):**
 ```json
@@ -36,3 +37,17 @@ O sistema permite encurtar URLs, armazená-las em banco de dados e gerar QR Code
 }
 ```
 
+### Como obter a contagem de cliques de um link encurtado
+
+Para saber quantas vezes um link encurtado foi acessado, use o endpoint:
+
+GET /api/links/clicks
+
+Você deve passar a URL completa do link encurtado no parâmetro de consulta `url`.
+
+
+**Exemplo de requisição:**
+
+```http
+GET http://localhost:8080/api/links/clicks?url=http://localhost:8080/api/links/abc123
+```
